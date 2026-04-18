@@ -40,19 +40,19 @@ resource "oci_core_instance" "this" {
   display_name = "k3s-node"
 
   lifecycle {
-    precondition {
+    postcondition {
       condition     = self.shape == "VM.Standard.A1.Flex"
       error_message = "Shape must be VM.Standard.A1.Flex to stay on Always Free tier."
     }
-    precondition {
+    postcondition {
       condition     = self.shape_config[0].ocpus <= 4
       error_message = "OCPUs must not exceed 4 — the Always Free limit for VM.Standard.A1.Flex."
     }
-    precondition {
+    postcondition {
       condition     = self.shape_config[0].memory_in_gbs <= 24
       error_message = "Memory must not exceed 24 GB — the Always Free limit for VM.Standard.A1.Flex."
     }
-    precondition {
+    postcondition {
       condition     = self.source_details[0].boot_volume_size_in_gbs <= 200
       error_message = "Boot volume must not exceed 200 GB — the Always Free block storage limit."
     }

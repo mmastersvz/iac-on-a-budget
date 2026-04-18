@@ -27,6 +27,7 @@ variables {
   ssh_public_key       = "ssh-rsa AAAAB3NzaC1yc2E test@test"
   ssh_private_key_path = "/tmp/fake_ssh"
   allowed_cidr         = "1.2.3.4/32"
+  alert_email          = "test@example.com"
 }
 
 run "plan_succeeds" {

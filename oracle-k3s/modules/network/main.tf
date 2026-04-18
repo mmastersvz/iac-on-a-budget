@@ -27,28 +27,40 @@ resource "oci_core_security_list" "this" {
   ingress_security_rules {
     protocol = "6"
     source   = var.allowed_cidr
-    tcp_options { min = 22 max = 22 }
+    tcp_options {
+      min = 22
+      max = 22
+    }
   }
 
   # K8s API — restricted to your IP
   ingress_security_rules {
     protocol = "6"
     source   = var.allowed_cidr
-    tcp_options { min = 6443 max = 6443 }
+    tcp_options {
+      min = 6443
+      max = 6443
+    }
   }
 
   # HTTP — open for workloads
   ingress_security_rules {
     protocol = "6"
     source   = "0.0.0.0/0"
-    tcp_options { min = 80 max = 80 }
+    tcp_options {
+      min = 80
+      max = 80
+    }
   }
 
   # HTTPS — open for workloads
   ingress_security_rules {
     protocol = "6"
     source   = "0.0.0.0/0"
-    tcp_options { min = 443 max = 443 }
+    tcp_options {
+      min = 443
+      max = 443
+    }
   }
 
   egress_security_rules {
