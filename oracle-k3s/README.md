@@ -111,14 +111,7 @@ This removes all resources including the budget alert.
 Tests use Terraform's built-in test framework (>= 1.6) with mocked providers — no real OCI account needed.
 
 ```bash
-# Full root module plan
 terraform test
-
-# Network module assertions
-terraform test -test-directory=modules/network/tests
-
-# Compute module assertions
-terraform test -test-directory=modules/compute/tests
 ```
 
 ## Architecture
