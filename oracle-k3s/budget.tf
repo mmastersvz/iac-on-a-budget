@@ -1,5 +1,17 @@
-# Fires an email alert if any charge appears — all resources should be $0
+# OCI allows only 1 budget per compartment on the free tier.
+# If one already exists we attach the alert rule to it rather than creating a new one.
+
+data "oci_budget_budgets" "existing" {
+  compartment_id = var.tenancy_ocid
+}
+
+locals {
+  existing_budget_id = length(data.oci_budget_budgets.existing.budgets) > 0 ? data.oci_budget_budgets.existing.budgets[0].id : null
+}
+
 resource "oci_budget_budget" "free_tier_guard" {
+  count = local.existing_budget_id == null ? 1 : 0
+
   compartment_id = var.tenancy_ocid
   amount         = 1
   reset_period   = "MONTHLY"
@@ -9,8 +21,12 @@ resource "oci_budget_budget" "free_tier_guard" {
   targets        = [var.compartment_ocid]
 }
 
+locals {
+  budget_id = local.existing_budget_id != null ? local.existing_budget_id : oci_budget_budget.free_tier_guard[0].id
+}
+
 resource "oci_budget_alert_rule" "any_spend" {
-  budget_id      = oci_budget_budget.free_tier_guard.id
+  budget_id      = local.budget_id
   threshold      = 0.01
   threshold_type = "ABSOLUTE"
   type           = "ACTUAL"

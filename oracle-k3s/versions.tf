@@ -1,10 +1,8 @@
 terraform {
   required_version = ">= 1.6"
 
-  # S3-compatible OCI Object Storage backend — configured via backend.hcl (gitignored)
-  # First-time setup: bash bootstrap/state/init-backend.sh
-  # Every init: terraform init -backend-config=backend.hcl
-  backend "s3" {}
+  # NOTE: OCI Object Storage S3 API is incompatible with Terraform 1.8+ (chunked encoding).
+  # State is stored locally. Back up terraform.tfstate manually or use Terraform Cloud free tier.
 
   required_providers {
     oci = {

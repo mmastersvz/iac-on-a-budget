@@ -10,9 +10,10 @@ module "network" {
 module "compute" {
   source = "./modules/compute"
 
-  compartment_ocid     = var.compartment_ocid
-  subnet_id            = module.network.subnet_id
-  ssh_public_key       = var.ssh_public_key
-  ssh_private_key_path = var.ssh_private_key_path
-  tenancy_ocid         = var.tenancy_ocid
+  compartment_ocid          = var.compartment_ocid
+  subnet_id                 = module.network.subnet_id
+  ssh_public_key            = var.ssh_public_key
+  ssh_private_key_path      = var.ssh_private_key_path
+  tenancy_ocid              = var.tenancy_ocid
+  availability_domain_index = var.availability_domain_index
 }

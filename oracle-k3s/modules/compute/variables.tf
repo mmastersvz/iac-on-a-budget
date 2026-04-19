@@ -22,3 +22,9 @@ variable "tenancy_ocid" {
   description = "OCID of the OCI tenancy (used to query availability domains)"
   type        = string
 }
+
+variable "availability_domain_index" {
+  description = "Index of the availability domain to use (0, 1, or 2)"
+  type        = number
+  default     = 0
+}

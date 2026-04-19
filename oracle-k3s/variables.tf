@@ -1,3 +1,14 @@
+variable "availability_domain_index" {
+  description = "Index of the availability domain to use (0, 1, or 2). Increment if you get 'Out of host capacity'."
+  type        = number
+  default     = 0
+
+  validation {
+    condition     = var.availability_domain_index >= 0 && var.availability_domain_index <= 2
+    error_message = "availability_domain_index must be 0, 1, or 2."
+  }
+}
+
 variable "tenancy_ocid" {
   description = "OCID of your OCI tenancy"
   type        = string

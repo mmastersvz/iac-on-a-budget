@@ -87,8 +87,8 @@ cat <<'EOF'
  API key used by the Terraform provider.
 
  Create one now (takes ~30 seconds):
-   1. OCI Console → top-right avatar → My Profile
-   2. Customer Secret Keys → Generate Secret Key
+   1. OCI Console → top-right avatar → User Settings
+   2. My Profile → Tokens and keys → Customer Secret Keys → Generate Secret Key
    3. Enter a description (e.g. "terraform-state")
    4. SAVE THE SECRET — it is only shown once
    5. Note the Access Key ID shown in the table after creation
@@ -106,12 +106,15 @@ cat > "$BACKEND_HCL" <<EOF
 bucket   = "${BUCKET_NAME}"
 key      = "terraform.tfstate"
 region   = "${REGION}"
-endpoint = "${S3_ENDPOINT}"
+endpoints = {
+  s3 = "${S3_ENDPOINT}"
+}
 
 skip_region_validation      = true
 skip_credentials_validation = true
 skip_requesting_account_id  = true
 skip_metadata_api_check     = true
+skip_s3_checksum            = true
 force_path_style            = true
 
 access_key = "${ACCESS_KEY}"
