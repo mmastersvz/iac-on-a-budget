@@ -1,19 +1,10 @@
 terraform {
   required_version = ">= 1.6"
 
-  # S3-compatible OCI Object Storage backend — configured via backend.hcl (gitignored)
-  # First-time setup: bash bootstrap/state/init-backend.sh
-  # Every init: terraform init -backend-config=backend.hcl
-  backend "s3" {}
-
   required_providers {
     oci = {
       source  = "oracle/oci"
       version = "~> 6.0"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
     }
   }
 }

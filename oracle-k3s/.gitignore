@@ -13,5 +13,8 @@ terraform.tfvars
 # Retrieved kubeconfig — contains cluster credentials
 kubeconfig
 
+# Backend config — contains Object Storage credentials
+backend.hcl
+
 # OCI private key if stored locally
 *.pem
