@@ -1,0 +1,31 @@
+name: Test OCI OIDC Authentication
+
+on:
+  workflow_dispatch:          # Manual trigger from GitHub UI
+    inputs:
+      oci-region:
+        description: 'OCI Region'
+        required: true
+        default: 'us-ashburn-1'
+        type: choice
+        options:
+          - us-ashburn-1
+          - us-phoenix-1
+          - eu-frankfurt-1
+          - uk-london-1
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/test-oci-oidc.yml'
+
+jobs:
+  test:
+    uses: mmastersvz/central-ci/.github/workflows/lib-test-oci.yml
+    with:
+      oci-region: ${{ inputs.oci-region || 'us-ashburn-1' }}
+      # Optional: test-command: 'oci compute instance list --compartment-id <your-compartment-ocid>'
+    secrets:
+      OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
+      OCI_IAM_DOMAIN_URL: ${{ secrets.OCI_IAM_DOMAIN_URL }}
+      OCI_OAUTH_CLIENT_ID: ${{ secrets.OCI_OAUTH_CLIENT_ID }}
+      OCI_OAUTH_CLIENT_SECRET: ${{ secrets.OCI_OAUTH_CLIENT_SECRET }}
